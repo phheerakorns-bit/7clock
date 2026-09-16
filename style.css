@@ -1,36 +1,46 @@
+```css
 @import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Prata&display=swap');
 
 :root {
-  /* Core palette — deep charcoal, warm ivory, brass accent */
-  --bg-color: #121110;
-  --card-bg: #1B1917;
-  --ink: #121110;
-  --text-main: #EDE6D8;
-  --text-muted: #9A907C;
+  /* Luxury Watch Palette — Deep Black, Ivory, Gold */
+  --bg-color: #0D0D0C;
+  --card-bg: #171614;
+  --ink: #0D0D0C;
+  --text-main: #F1ECE2;
+  --text-muted: #9C9588;
   --accent-gold: #C9A15B;
-  --border-light: #2E2B26;
-  --border-dark: #EDE6D8;
-  --shadow-soft: 0 10px 28px rgba(0, 0, 0, 0.4);
-  --shadow-hover: 0 20px 44px rgba(0, 0, 0, 0.55);
+  --border-light: #2D2A25;
+  --border-dark: #F1ECE2;
+  --shadow-soft: 0 10px 28px rgba(0, 0, 0, 0.45);
+  --shadow-hover: 0 20px 44px rgba(0, 0, 0, 0.65);
 
-  /* Mood tags — tuned brighter to read clearly on a dark card */
+  /* Watch Categories */
   --seamless-tag: #C9A15B;
-  --cotton-tag: #A9B78C;
-  --sport-tag: #7FA079;
-  --lounge-tag: #C08A98;
+  --cotton-tag: #D6D0C4;
+  --sport-tag: #7F9A91;
+  --lounge-tag: #BFA47A;
 
   --radius-sm: 2px;
   --radius-md: 4px;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 body {
   font-family: 'Jost', sans-serif;
   font-weight: 400;
   background-color: var(--bg-color);
-  background-image: radial-gradient(circle at 50% -10%, rgba(201, 161, 91, 0.08), transparent 55%);
+  background-image:
+    radial-gradient(
+      circle at 50% -10%,
+      rgba(201, 161, 91, 0.10),
+      transparent 55%
+    );
   color: var(--text-main);
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
@@ -43,11 +53,20 @@ h1, h2, h3 {
   line-height: 1.25;
 }
 
-a { text-decoration: none; color: inherit; }
+a {
+  text-decoration: none;
+  color: inherit;
+}
 
-.container { max-width: 1140px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+}
+
 
 /* ============ Navbar ============ */
+
 .nav-header {
   display: flex;
   justify-content: space-between;
@@ -60,7 +79,7 @@ a { text-decoration: none; color: inherit; }
 .brand-logo {
   font-family: 'Prata', serif;
   font-size: 1.6rem;
-  letter-spacing: 2.5px;
+  letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--text-main);
 }
@@ -71,7 +90,9 @@ a { text-decoration: none; color: inherit; }
   margin-left: 2rem;
   padding-bottom: 4px;
   border-bottom: 1px solid transparent;
-  transition: color 0.25s var(--ease), border-color 0.25s var(--ease);
+  transition:
+    color 0.25s var(--ease),
+    border-color 0.25s var(--ease);
 }
 
 .nav-header nav a:hover,
@@ -80,11 +101,19 @@ a { text-decoration: none; color: inherit; }
   border-color: var(--accent-gold);
 }
 
+
 /* ============ Hero Section ============ */
+
 .hero {
   text-align: left;
   padding: 6rem 3.5rem;
-  background: var(--card-bg);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.02),
+      rgba(201,161,91,0.05)
+    ),
+    var(--card-bg);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-soft);
   margin-bottom: 3.5rem;
@@ -117,9 +146,9 @@ a { text-decoration: none; color: inherit; }
   margin: 0 0 2.5rem;
 }
 
+
 /* ============ Buttons ============ */
-/* Light ivory fill on dark surfaces reads as the premium move here,
-   rather than a bright accent color block. */
+
 .btn {
   display: inline-block;
   padding: 1rem 2.4rem;
@@ -129,10 +158,13 @@ a { text-decoration: none; color: inherit; }
   font-family: 'Jost', sans-serif;
   font-size: 0.95rem;
   font-weight: 500;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: background 0.35s var(--ease), color 0.35s var(--ease), transform 0.35s var(--ease);
+  transition:
+    background 0.35s var(--ease),
+    color 0.35s var(--ease),
+    transform 0.35s var(--ease);
 }
 
 .btn:hover {
@@ -153,8 +185,11 @@ a { text-decoration: none; color: inherit; }
   color: var(--ink);
 }
 
+
 /* ============ Grid & Cards ============ */
-.mood-grid, .product-grid {
+
+.mood-grid,
+.product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 2rem;
@@ -166,7 +201,10 @@ a { text-decoration: none; color: inherit; }
   border-radius: var(--radius-md);
   padding: 1.4rem 1.4rem 1.8rem;
   text-align: left;
-  transition: transform 0.35s var(--ease), border-color 0.35s var(--ease), box-shadow 0.35s var(--ease);
+  transition:
+    transform 0.35s var(--ease),
+    border-color 0.35s var(--ease),
+    box-shadow 0.35s var(--ease);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -181,25 +219,46 @@ a { text-decoration: none; color: inherit; }
 
 .card img {
   width: 100%;
-  aspect-ratio: 1/1;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: var(--radius-sm);
   margin-bottom: 1.2rem;
-  background-color: #26221D;
-  filter: grayscale(10%) brightness(0.96);
-  transition: filter 0.5s var(--ease), transform 0.6s var(--ease);
+  background-color: #211F1B;
+  filter: brightness(0.92);
+  transition:
+    filter 0.5s var(--ease),
+    transform 0.6s var(--ease);
 }
 
 .card:hover img {
-  filter: grayscale(0%) brightness(1);
+  filter: brightness(1);
   transform: scale(1.015);
 }
 
-.card h3 { font-size: 1.15rem; margin-bottom: 0.4rem; color: var(--text-main); }
-.card p { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.2rem; flex-grow: 1; }
-.card .price { font-size: 1.05rem; font-weight: 500; font-family: 'Prata', serif; color: var(--accent-gold); margin-bottom: 1rem; }
+.card h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.4rem;
+  color: var(--text-main);
+}
+
+.card p {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  margin-bottom: 1.2rem;
+  flex-grow: 1;
+}
+
+.card .price {
+  font-size: 1.05rem;
+  font-weight: 500;
+  font-family: 'Prata', serif;
+  color: var(--accent-gold);
+  margin-bottom: 1rem;
+}
+
 
 /* ============ Category Tags ============ */
+
 .card-tag {
   display: inline-block;
   font-family: 'Prata', serif;
@@ -213,12 +272,25 @@ a { text-decoration: none; color: inherit; }
   width: fit-content;
 }
 
-.tag-seamless { color: var(--seamless-tag); }
-.tag-cotton { color: var(--cotton-tag); }
-.tag-sport { color: var(--sport-tag); }
-.tag-lounge { color: var(--lounge-tag); }
+.tag-seamless {
+  color: var(--seamless-tag);
+}
+
+.tag-cotton {
+  color: var(--cotton-tag);
+}
+
+.tag-sport {
+  color: var(--sport-tag);
+}
+
+.tag-lounge {
+  color: var(--lounge-tag);
+}
+
 
 /* ============ Filter Bar ============ */
+
 #filter-bar {
   display: flex;
   justify-content: center;
@@ -242,12 +314,14 @@ a { text-decoration: none; color: inherit; }
 
 #filter-bar button:hover,
 #filter-bar button.active {
-  border-color: var(--border-dark);
-  background: var(--border-dark);
+  border-color: var(--accent-gold);
+  background: var(--accent-gold);
   color: var(--ink);
 }
 
+
 /* ============ Forms ============ */
+
 .form-card {
   background: var(--card-bg);
   padding: 3rem 2.75rem;
@@ -258,7 +332,10 @@ a { text-decoration: none; color: inherit; }
   margin: 0 auto;
 }
 
-.form-group { margin-bottom: 1.75rem; text-align: left; }
+.form-group {
+  margin-bottom: 1.75rem;
+  text-align: left;
+}
 
 .form-group label {
   display: block;
@@ -268,7 +345,8 @@ a { text-decoration: none; color: inherit; }
   color: var(--text-muted);
 }
 
-.form-group input, .form-group textarea {
+.form-group input,
+.form-group textarea {
   width: 100%;
   padding: 0.75rem 0.15rem;
   border: none;
@@ -281,14 +359,20 @@ a { text-decoration: none; color: inherit; }
   transition: border-color 0.25s var(--ease);
 }
 
-.form-group input::placeholder, .form-group textarea::placeholder { color: #5C5646; }
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #5C5646;
+}
 
-.form-group input:focus, .form-group textarea:focus {
+.form-group input:focus,
+.form-group textarea:focus {
   outline: none;
   border-color: var(--accent-gold);
 }
 
+
 /* ============ Table ============ */
+
 .table-container {
   background: var(--card-bg);
   border-radius: var(--radius-md);
@@ -297,7 +381,12 @@ a { text-decoration: none; color: inherit; }
   box-shadow: var(--shadow-soft);
 }
 
-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.92rem; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.92rem;
+}
 
 th {
   background: transparent;
@@ -306,13 +395,22 @@ th {
   font-weight: 600;
   letter-spacing: 0.01em;
   color: var(--text-main);
-  border-bottom: 2px solid var(--border-dark);
+  border-bottom: 2px solid var(--accent-gold);
 }
 
-td { padding: 1.2rem 1.25rem; border-bottom: 1px solid var(--border-light); color: var(--text-muted); }
-tr:last-child td { border-bottom: none; }
+td {
+  padding: 1.2rem 1.25rem;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-muted);
+}
 
-/* ============ Accessibility & motion ============ */
+tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* ============ Accessibility & Motion ============ */
+
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -322,14 +420,37 @@ textarea:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; animation: none !important; }
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
 }
 
+
 /* ============ Responsive ============ */
+
 @media (max-width: 640px) {
-  .hero { padding: 3.5rem 1.5rem; }
-  .hero h1 { max-width: none; }
-  .nav-header { flex-direction: column; gap: 1rem; align-items: flex-start; }
-  .nav-header nav a { margin-left: 0; margin-right: 1.5rem; }
-  .form-card { padding: 2rem 1.5rem; }
+  .hero {
+    padding: 3.5rem 1.5rem;
+  }
+
+  .hero h1 {
+    max-width: none;
+  }
+
+  .nav-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .nav-header nav a {
+    margin-left: 0;
+    margin-right: 1.5rem;
+  }
+
+  .form-card {
+    padding: 2rem 1.5rem;
+  }
 }
+```
