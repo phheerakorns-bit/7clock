@@ -1,10 +1,19 @@
-const escapeHtml = (v) =>
-  String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+// ต้องใส่ <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+// ไว้ในทุกหน้า HTML "ก่อน" script.js
+const SUPABASE_URL = 'https://srhknjgzowbmjpaebmds.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_N0w6k30nuEeY_dSNcsNptg_45ggyL9a'; // anon key ใส่ฝั่งหน้าเว็บได้ (ความปลอดภัยอยู่ที่ RLS)
 
-// สร้าง Supabase client เฉพาะหน้าที่โหลดไลบรารีไว้ (order.html, admin.html)
-const db = (window.supabase && typeof SUPABASE_URL !== 'undefined')
-  ? window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY)
-  : null;
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// กัน HTML/XSS จากข้อมูลลูกค้าและข้อมูลสินค้า
+function esc(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -13,166 +22,191 @@ document.addEventListener('DOMContentLoaded', () => {
   // ส่วนหน้าแสดงสินค้า
   // ==========================================
   const productList = document.getElementById('product-list');
-  if (productList) {
-    fetch('products.json').then(res => res.json()).then(products => {
-      const moodFilter = urlParams.get('mood') || 'all';
-      renderProducts(products, moodFilter);
 
-      const filterBar = document.getElementById('filter-bar');
-      if (filterBar) {
-        const activeBtn = filterBar.querySelector(`[data-mood="${moodFilter}"]`);
-        if (activeBtn) activeBtn.classList.add('active');
-
-        filterBar.addEventListener('click', (e) => {
-          if (e.target.tagName === 'BUTTON') {
-            filterBar.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-            e.target.classList.add('active');
-            renderProducts(products, e.target.dataset.mood);
-          }
-        });
-      }
-    });
-  }
+  // แสดงเตือนเมื่อสินค้าเหลือ <= LOW_STOCK_THRESHOLD ชิ้น
+  const LOW_STOCK_THRESHOLD = 3;
 
   function renderProducts(products, filter) {
-    productList.innerHTML = '';
     const filtered = filter === 'all' ? products : products.filter(p => p.mood === filter);
-    filtered.forEach(p => {
-      const name = p.name.trim();
-      productList.innerHTML += `
+    productList.innerHTML = filtered.map(p => {
+      const stock = p.stock === undefined || p.stock === null ? NaN : Number(p.stock);
+      const hasStock = Number.isFinite(stock);
+      const soldOut = hasStock && stock <= 0;
+      const low = hasStock && stock > 0 && stock <= LOW_STOCK_THRESHOLD;
+
+      const stockLabel = soldOut
+        ? '<p style="color:#c00;font-weight:600;">สินค้าหมด</p>'
+        : low
+        ? `<p style="color:#e67e00;font-weight:600;">เหลือเพียง ${esc(stock)} ชิ้น</p>`
+        : '';
+
+      const button = soldOut
+        ? '<span class="btn" style="text-align:center;opacity:.5;pointer-events:none;">สินค้าหมด</span>'
+        : `<a href="order.html?item=${encodeURIComponent(p.name)}&price=${encodeURIComponent(p.price)}"
+             class="btn" style="text-align:center;">สั่งซื้อสินค้า</a>`;
+
+      return `
         <div class="card">
-          <span class="card-tag tag-${p.mood}">${p.mood}</span>
-          <img src="${p.image}" alt="${name}">
-          <h3>${name}</h3>
-          <p>${p.description}</p>
-          <div class="price">฿${p.price}</div>
-          <a href="order.html?item=${encodeURIComponent(name)}&price=${p.price}&size=${encodeURIComponent(p.size)}" class="btn" style="text-align:center;">สั่งซื้อสินค้า</a>
+          <span class="card-tag tag-${esc(p.mood)}">${esc(p.mood)}</span>
+          <img src="${esc(p.image)}" alt="${esc(p.name)}">
+          <h3>${esc(p.name)}</h3>
+          <p>${esc(p.description)}</p>
+          <div class="price">฿${esc(p.price)}</div>
+          ${stockLabel}
+          ${button}
         </div>
       `;
+    }).join('');
+  }
+
+  async function loadProducts() {
+    // รูป/หมวด/คำอธิบาย อยู่ใน products.json
+    let local = [];
+    try {
+      const res = await fetch('products.json');
+      if (res.ok) local = await res.json();
+    } catch (e) {
+      console.warn('โหลด products.json ไม่สำเร็จ', e);
+    }
+
+    // ราคา/สต็อกล่าสุด อยู่ใน Supabase
+    const { data, error } = await sb
+      .from('products')
+      .select('*')
+      .order('id', { ascending: true });
+
+    if (error || !data || data.length === 0) {
+      console.warn('โหลดจาก Supabase ไม่สำเร็จ ใช้ products.json แทน', error);
+      if (local.length === 0) throw new Error('โหลดสินค้าไม่สำเร็จ');
+      return local;
+    }
+
+    // รวมข้อมูลโดยจับคู่ด้วยชื่อสินค้า (Supabase ทับค่าที่ซ้ำกัน)
+    const key = (v) => String(v ?? '').trim().toLowerCase();
+    const localByName = new Map(local.map(p => [key(p.name), p]));
+    return data.map(row => {
+      const base = localByName.get(key(row.name)) || {};
+      const clean = Object.fromEntries(
+        Object.entries(row).filter(([, v]) => v !== null && v !== '')
+      );
+      return { ...base, ...clean };
     });
   }
 
+  if (productList) {
+    loadProducts()
+      .then(products => {
+        const moodFilter = urlParams.get('mood') || 'all';
+        renderProducts(products, moodFilter);
+
+        const filterBar = document.getElementById('filter-bar');
+        if (filterBar) {
+          const activeBtn = filterBar.querySelector(`[data-mood="${CSS.escape(moodFilter)}"]`);
+          if (activeBtn) activeBtn.classList.add('active');
+
+          filterBar.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+              filterBar.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+              e.target.classList.add('active');
+              renderProducts(products, e.target.dataset.mood);
+            }
+          });
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        productList.innerHTML = '<p>โหลดสินค้าไม่สำเร็จ กรุณารีเฟรชหน้า</p>';
+      });
+  }
+
   // ==========================================
-  // ส่วนหน้าสั่งซื้อ -> บันทึกลง Supabase
-  // (Database Webhook จะเรียก Edge Function ส่ง Telegram ให้เอง)
+  // ส่วนหน้าสั่งซื้อ (บันทึกลง Supabase)
   // ==========================================
   const orderForm = document.getElementById('orderForm');
-  if (orderForm && db) {
+  if (orderForm) {
     const itemInput = document.getElementById('items');
     const totalInput = document.getElementById('total');
-    const sizeSelect = document.getElementById('size');
-
-    const qtyInput = document.getElementById('qty');
-    const unitPrice = Number(urlParams.get('price')) || 0;
     if (urlParams.has('item')) itemInput.value = urlParams.get('item');
-    document.getElementById('unitPriceText').textContent = `ราคาต่อชิ้น ฿${unitPrice.toLocaleString('th-TH')}`;
-
-    const getQty = () => Math.min(99, Math.max(1, parseInt(qtyInput.value, 10) || 1));
-    const updateTotal = () => {
-      qtyInput.value = getQty();
-      totalInput.value = unitPrice * getQty();
-    };
-    document.getElementById('qtyMinus').addEventListener('click', () => { qtyInput.value = getQty() - 1; updateTotal(); });
-    document.getElementById('qtyPlus').addEventListener('click', () => { qtyInput.value = getQty() + 1; updateTotal(); });
-    qtyInput.addEventListener('input', updateTotal);
-    updateTotal();
-
-    // สร้างตัวเลือกไซส์จากข้อมูลสินค้า เช่น "M / L / XL"
-    const sizes = (urlParams.get('size') || 'M / L / XL').split('/').map(s => s.trim()).filter(Boolean);
-    sizeSelect.innerHTML = sizes.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
+    if (urlParams.has('price')) totalInput.value = urlParams.get('price');
 
     orderForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      const val = (id) => document.getElementById(id)?.value.trim() || '-';
+
+      const order = {
+        customer_name: val('customerName'),
+        contact: val('contact'),
+        address: val('address'),
+        items: itemInput?.value || '-',
+        total: Number(totalInput?.value) || 0,
+        note: val('note'),
+      };
 
       const submitBtn = orderForm.querySelector('button[type="submit"]');
       const originalText = submitBtn.innerText;
       submitBtn.innerText = 'กำลังส่งคำสั่งซื้อ...';
       submitBtn.disabled = true;
 
-      const order = {
-        customer_name: document.getElementById('customerName').value.trim(),
-        contact: document.getElementById('contact').value.trim(),
-        address: document.getElementById('address').value.trim(),
-        items: itemInput.value,
-        size: sizeSelect.value,
-        quantity: getQty(),
-        unit_price: unitPrice,
-        total: unitPrice * getQty(),
-        note: document.getElementById('note').value.trim() || null,
-      };
+      // หมายเหตุ: ไม่ใส่ .select() ต่อท้าย เพราะ anon ไม่มีสิทธิ์อ่านตาราง orders
+      const { error } = await sb.from('orders').insert(order);
 
-      try {
-        const { error } = await db.from('orders').insert(order);
-        if (error) throw error;
-        window.location.href = 'thankyou.html';
-      } catch (err) {
-        console.error(err);
-        alert('เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง');
+      if (error) {
+        console.error(error);
+        alert('เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง (สินค้าอาจหมดแล้ว)');
         submitBtn.innerText = originalText;
         submitBtn.disabled = false;
+        return;
       }
+      window.location.href = 'thankyou.html';
     });
   }
 
   // ==========================================
-  // ส่วน Admin (ล็อกอินด้วย Supabase Auth)
+  // ส่วน Admin (ต้องล็อกอินก่อน)
   // ==========================================
   const ordersTableBody = document.querySelector('#ordersTable tbody');
-  if (ordersTableBody && db) {
-    const loginBox = document.getElementById('loginBox');
-    const dashboard = document.getElementById('dashboard');
-    const loginForm = document.getElementById('loginForm');
-    const logoutBtn = document.getElementById('logoutBtn');
+  if (ordersTableBody) {
+    (async () => {
+      let { data: { session } } = await sb.auth.getSession();
 
-    async function loadOrders() {
-      const { data, error } = await db
+      if (!session) {
+        const email = prompt('อีเมลแอดมิน');
+        const password = email ? prompt('รหัสผ่าน') : null;
+        if (!email || !password) {
+          ordersTableBody.innerHTML = '<tr><td colspan="8">กรุณาล็อกอินเพื่อดูออเดอร์</td></tr>';
+          return;
+        }
+        const { error: authError } = await sb.auth.signInWithPassword({ email, password });
+        if (authError) {
+          alert('ล็อกอินไม่สำเร็จ: ' + authError.message);
+          return;
+        }
+      }
+
+      const { data, error } = await sb
         .from('orders')
         .select('*')
         .order('created_at', { ascending: false });
 
       if (error) {
-        ordersTableBody.innerHTML = `<tr><td colspan="8">โหลดข้อมูลไม่สำเร็จ: ${escapeHtml(error.message)}</td></tr>`;
+        console.error(error);
+        ordersTableBody.innerHTML = '<tr><td colspan="8">โหลดออเดอร์ไม่สำเร็จ</td></tr>';
         return;
       }
-      if (!data.length) {
-        ordersTableBody.innerHTML = '<tr><td colspan="8">ยังไม่มีออเดอร์</td></tr>';
-        return;
-      }
+
+      // ลำดับคอลัมน์ต้องตรงกับหัวตารางใน admin.html
       ordersTableBody.innerHTML = data.map(o => `
         <tr>
-          <td>${escapeHtml(new Date(o.created_at).toLocaleString('th-TH', { timeZone: 'Asia/Bangkok', dateStyle: 'short', timeStyle: 'short' }))}</td>
-          <td>${escapeHtml(o.customer_name)}</td>
-          <td>${escapeHtml(o.contact)}</td>
-          <td>${escapeHtml(o.address)}</td>
-          <td>${escapeHtml(o.items)}</td>
-          <td>${escapeHtml(o.quantity)}</td>
-          <td>฿${Number(o.total).toLocaleString('th-TH')}</td>
-          <td>${escapeHtml(o.size)}${o.note ? ' / ' + escapeHtml(o.note) : ''}</td>
+          <td>${esc(new Date(o.created_at).toLocaleString('th-TH'))}</td>
+          <td>${esc(o.customer_name)}</td>
+          <td>${esc(o.contact)}</td>
+          <td>${esc(o.address)}</td>
+          <td>${esc(o.items)}</td>
+          <td>${esc(o.total)}</td>
+          <td>${esc(o.note)}</td>
         </tr>
       `).join('');
-    }
-
-    function showDashboard(show) {
-      loginBox.style.display = show ? 'none' : 'block';
-      dashboard.style.display = show ? 'block' : 'none';
-      if (show) loadOrders();
-    }
-
-    db.auth.getSession().then(({ data }) => showDashboard(!!data.session));
-
-    loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const { error } = await db.auth.signInWithPassword({
-        email: document.getElementById('adminEmail').value,
-        password: document.getElementById('adminPassword').value,
-      });
-      if (error) return alert('อีเมลหรือรหัสผ่านไม่ถูกต้อง');
-      showDashboard(true);
-    });
-
-    logoutBtn.addEventListener('click', async () => {
-      await db.auth.signOut();
-      showDashboard(false);
-    });
+    })();
   }
 });
