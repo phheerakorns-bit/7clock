@@ -1,11 +1,8 @@
-// ต้องใส่ <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-// ไว้ในทุกหน้า HTML "ก่อน" script.js
 const SUPABASE_URL = 'https://htxwjotjnucxnrdppoca.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_gcQfRrMYqhJf1eFELFLkKw_QLUdRd8l'; // anon key ใส่ฝั่งหน้าเว็บได้ (ความปลอดภัยอยู่ที่ RLS)
+const SUPABASE_ANON_KEY = 'sb_publishable_gcQfRrMYqhJf1eFELFLkKw_QLUdRd8l';
 
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// กัน HTML/XSS จากข้อมูลลูกค้าและข้อมูลสินค้า
 function esc(str) {
   return String(str ?? '')
     .replace(/&/g, '&amp;')
@@ -22,8 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // ส่วนหน้าแสดงสินค้า
   // ==========================================
   const productList = document.getElementById('product-list');
-
-  // แสดงเตือนเมื่อสินค้าเหลือ <= LOW_STOCK_THRESHOLD ชิ้น
   const LOW_STOCK_THRESHOLD = 3;
 
   function renderProducts(products, filter) {
@@ -60,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function loadProducts() {
-    // รูป/หมวด/คำอธิบาย อยู่ใน products.json
     let local = [];
     try {
       const res = await fetch('products.json');
@@ -69,19 +63,16 @@ document.addEventListener('DOMContentLoaded', () => {
       console.warn('โหลด products.json ไม่สำเร็จ', e);
     }
 
-    // ราคา/สต็อกล่าสุด อยู่ใน Supabase
     const { data, error } = await sb
       .from('products')
       .select('*')
       .order('id', { ascending: true });
 
     if (error || !data || data.length === 0) {
-      console.warn('โหลดจาก Supabase ไม่สำเร็จ ใช้ products.json แทน', error);
       if (local.length === 0) throw new Error('โหลดสินค้าไม่สำเร็จ');
       return local;
     }
 
-    // รวมข้อมูลโดยจับคู่ด้วยชื่อสินค้า (Supabase ทับค่าที่ซ้ำกัน)
     const key = (v) => String(v ?? '').trim().toLowerCase();
     const localByName = new Map(local.map(p => [key(p.name), p]));
     return data.map(row => {
@@ -120,14 +111,39 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // ส่วนหน้าสั่งซื้อ (บันทึกลง Supabase)
+  // ส่วนหน้าสั่งซื้อ
   // ==========================================
   const orderForm = document.getElementById('orderForm');
   if (orderForm) {
     const itemInput = document.getElementById('items');
     const totalInput = document.getElementById('total');
+    const qtyInput = document.getElementById('qty');
+    const qtyMinus = document.getElementById('qtyMinus');
+    const qtyPlus = document.getElementById('qtyPlus');
+
+    const basePrice = Number(urlParams.get('price')) || 0;
     if (urlParams.has('item')) itemInput.value = urlParams.get('item');
-    if (urlParams.has('price')) totalInput.value = urlParams.get('price');
+
+    function updatePrice() {
+      const qty = Math.max(1, Number(qtyInput.value) || 1);
+      qtyInput.value = qty;
+      totalInput.value = basePrice * qty;
+    }
+
+    if (basePrice > 0) {
+      updatePrice();
+      qtyMinus?.addEventListener('click', () => {
+        if (Number(qtyInput.value) > 1) {
+          qtyInput.value = Number(qtyInput.value) - 1;
+          updatePrice();
+        }
+      });
+      qtyPlus?.addEventListener('click', () => {
+        qtyInput.value = Number(qtyInput.value) + 1;
+        updatePrice();
+      });
+      qtyInput?.addEventListener('input', updatePrice);
+    }
 
     orderForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -138,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
         customer_name: val('customerName'),
         contact: val('contact'),
         address: val('address'),
-        items: itemInput?.value || '-',
+        items: `${itemInput?.value || '-'} (x${qtyInput?.value || 1})`,
         total: Number(totalInput?.value) || 0,
         note: val('note'),
       };
@@ -148,12 +164,11 @@ document.addEventListener('DOMContentLoaded', () => {
       submitBtn.innerText = 'กำลังส่งคำสั่งซื้อ...';
       submitBtn.disabled = true;
 
-      // หมายเหตุ: ไม่ใส่ .select() ต่อท้าย เพราะ anon ไม่มีสิทธิ์อ่านตาราง orders
       const { error } = await sb.from('orders').insert(order);
 
       if (error) {
         console.error(error);
-        alert('เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง (สินค้าอาจหมดแล้ว)');
+        alert('เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง');
         submitBtn.innerText = originalText;
         submitBtn.disabled = false;
         return;
@@ -163,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // ส่วน Admin (ต้องล็อกอินก่อน)
+  // ส่วน Admin
   // ==========================================
   const ordersTableBody = document.querySelector('#ordersTable tbody');
   if (ordersTableBody) {
@@ -174,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const email = prompt('อีเมลแอดมิน');
         const password = email ? prompt('รหัสผ่าน') : null;
         if (!email || !password) {
-          ordersTableBody.innerHTML = '<tr><td colspan="8">กรุณาล็อกอินเพื่อดูออเดอร์</td></tr>';
+          ordersTableBody.innerHTML = '<tr><td colspan="7">กรุณาล็อกอินเพื่อดูออเดอร์</td></tr>';
           return;
         }
         const { error: authError } = await sb.auth.signInWithPassword({ email, password });
@@ -191,11 +206,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (error) {
         console.error(error);
-        ordersTableBody.innerHTML = '<tr><td colspan="8">โหลดออเดอร์ไม่สำเร็จ</td></tr>';
+        ordersTableBody.innerHTML = '<tr><td colspan="7">โหลดออเดอร์ไม่สำเร็จ</td></tr>';
         return;
       }
 
-      // ลำดับคอลัมน์ต้องตรงกับหัวตารางใน admin.html
       ordersTableBody.innerHTML = data.map(o => `
         <tr>
           <td>${esc(new Date(o.created_at).toLocaleString('th-TH'))}</td>
@@ -203,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <td>${esc(o.contact)}</td>
           <td>${esc(o.address)}</td>
           <td>${esc(o.items)}</td>
-          <td>${esc(o.total)}</td>
+          <td>฿${esc(o.total)}</td>
           <td>${esc(o.note)}</td>
         </tr>
       `).join('');
