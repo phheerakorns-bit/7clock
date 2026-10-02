@@ -10,29 +10,53 @@
   <div class="container" style="max-width: 1200px;">
     <header class="nav-header">
       <div class="brand-logo">7CLOCK Admin</div>
-      <a href="index.html" class="btn btn-secondary">ไปยังหน้าเว็บร้านค้า</a>
+      <div style="display:flex; gap:.75rem;">
+        <button id="logoutBtn" class="btn btn-secondary" type="button">ออกจากระบบ</button>
+        <a href="index.html" class="btn btn-secondary">ไปยังหน้าเว็บร้านค้า</a>
+      </div>
     </header>
 
-    <h2 style="margin-bottom: 1.5rem;">รายการคำสั่งซื้อทั้งหมด</h2>
-    <div class="table-container">
-      <table id="ordersTable">
-        <thead>
-          <tr>
-            <th>วันเวลา</th>
-            <th>ชื่อลูกค้า</th>
-            <th>เบอร์โทร/Line</th>
-            <th>ที่อยู่จัดส่ง</th>
-            <th>รายการสินค้า</th>
-            <th>จำนวนเงินรวม</th>
-            <th>หมายเหตุ</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
+    <!-- ฟอร์มล็อกอินแอดมิน -->
+    <div id="loginBox" class="form-card" style="display:none;">
+      <h2 style="text-align:center; margin-bottom:1.5rem;">เข้าสู่ระบบแอดมิน</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="adminEmail">อีเมล</label>
+          <input type="email" id="adminEmail" required>
+        </div>
+        <div class="form-group">
+          <label for="adminPassword">รหัสผ่าน</label>
+          <input type="password" id="adminPassword" required>
+        </div>
+        <button type="submit" class="btn" style="width:100%;">เข้าสู่ระบบ</button>
+      </form>
+    </div>
+
+    <!-- ตารางออเดอร์ (แสดงหลังล็อกอิน) -->
+    <div id="dashboard" style="display:none;">
+      <h2 style="margin-bottom: 1.5rem;">รายการคำสั่งซื้อทั้งหมด</h2>
+      <div class="table-container">
+        <table id="ordersTable">
+          <thead>
+            <tr>
+              <th>วันเวลา</th>
+              <th>ชื่อลูกค้า</th>
+              <th>เบอร์โทร/Line</th>
+              <th>ที่อยู่</th>
+              <th>รายการสินค้า</th>
+              <th>จำนวน</th>
+              <th>ยอดรวม</th>
+              <th>ไซส์ / หมายเหตุ</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </div>
   </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
