@@ -24,13 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
  
   // แปลงชื่อหมวดจากทุกรูปแบบให้เป็นค่ามาตรฐานที่ปุ่มกรองใช้
   const MOOD_ALIAS = {
-    seamless: 'seamless', classic: 'seamless',
-    cotton: 'cotton',     minimal: 'cotton',
+    classic: 'classic', seamless: 'classic',
+    minimal: 'minimal', cotton: 'minimal',
     sport: 'sport',
-    lounge: 'lounge',     luxury: 'lounge',
+    luxury: 'luxury',   lounge: 'luxury',
   };
   const MOOD_LABEL = {
-    seamless: 'Classic', cotton: 'Minimal', sport: 'Sport', lounge: 'Luxury',
+    classic: 'Classic', minimal: 'Minimal', sport: 'Sport', luxury: 'Luxury',
   };
  
   // ทำชื่อให้เทียบกันได้ (ตัด "7CLOCK" นำหน้า, ตัดช่องว่าง/อักขระพิเศษ)
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
  
     if (filtered.length === 0) {
       productList.innerHTML =
-        '<p style="grid-column:1/-1;text-align:center;color:var(--text-muted);">ยังไม่มีสินค้าในหมวดนี้</p>';
+        '<p class="empty-state">ยังไม่มีสินค้าในหมวดนี้</p>';
       return;
     }
  
@@ -57,15 +57,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const low = hasStock && stock > 0 && stock <= LOW_STOCK_THRESHOLD;
  
       const stockLabel = soldOut
-        ? '<p style="color:#c00;font-weight:600;">สินค้าหมด</p>'
+        ? '<p class="stock-out">สินค้าหมด</p>'
         : low
-        ? `<p style="color:#e67e00;font-weight:600;">เหลือเพียง ${esc(stock)} ชิ้น</p>`
+        ? `<p class="stock-low">เหลือเพียง ${esc(stock)} ชิ้น</p>`
         : '';
  
       const button = soldOut
-        ? '<span class="btn" style="text-align:center;opacity:.5;pointer-events:none;">สินค้าหมด</span>'
+        ? '<span class="btn btn-disabled">สินค้าหมด</span>'
         : `<a href="order.html?item=${encodeURIComponent(p.name)}&price=${encodeURIComponent(p.price)}"
-             class="btn" style="text-align:center;">สั่งซื้อสินค้า</a>`;
+             class="btn">สั่งซื้อสินค้า</a>`;
  
       return `
         <div class="card">
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
                alt="${esc(p.name)}" loading="lazy">
           <h3>${esc(p.name)}</h3>
           <p>${esc(p.description)}</p>
-          <div class="price">฿${esc(p.price)}</div>
+          <div class="price">฿${esc(Number(p.price).toLocaleString('th-TH'))}</div>
           ${stockLabel}
           ${button}
         </div>
@@ -296,24 +296,3 @@ document.addEventListener('DOMContentLoaded', () => {
     })();
   }
 });
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
