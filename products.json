@@ -1,83 +1,83 @@
 [
   {
     "id": 1,
-    "name": "7CLOCK Classic Silver",
+    "name": "7CLOCK Royal Silver",
     "mood": "seamless",
     "type": "watch",
     "size": "40mm",
-    "price": 1290,
+    "price": 45900,
     "image": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=800&q=80",
-    "description": "นาฬิกาดีไซน์คลาสสิก หน้าปัดเรียบหรู ตัวเรือนสีเงิน เหมาะสำหรับใส่ได้ทุกวัน"
+    "description": "นาฬิกาหรูตัวเรือนสแตนเลสสตีลขัดเงา หน้าปัดคริสตัลแซฟไฟร์ เครื่องจักรกลอัตโนมัติ ดีไซน์คลาสสิกระดับพรีเมียม"
   },
   {
     "id": 2,
-    "name": "7CLOCK Classic Black",
+    "name": "7CLOCK Royal Black",
     "mood": "seamless",
     "type": "watch",
     "size": "40mm",
-    "price": 1390,
+    "price": 49900,
     "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80",
-    "description": "นาฬิกาหน้าปัดสีดำสุดคลาสสิก ดีไซน์เรียบง่าย พร้อมสายสีดำสำหรับลุคที่ดูสุขุม"
+    "description": "หน้าปัดสีดำเงางามพร้อมสายหนังแท้ ให้ลุคสุขุมหรูหรา เหมาะกับงานทางการและโอกาสสำคัญ"
   },
   {
     "id": 3,
-    "name": "7CLOCK Minimal White",
+    "name": "7CLOCK Pearl White",
     "mood": "cotton",
     "type": "watch",
     "size": "38mm",
-    "price": 1190,
+    "price": 38900,
     "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80",
-    "description": "ดีไซน์มินิมอล หน้าปัดสีขาวสะอาดตา เหมาะกับคนที่ชอบความเรียบง่ายและทันสมัย"
+    "description": "หน้าปัดมุกขาวละเอียดอ่อน ตัวเรือนบางเฉียบ สง่างามและทันสมัยสำหรับผู้ที่ชื่นชอบความหรูแบบเรียบง่าย"
   },
   {
     "id": 4,
-    "name": "7CLOCK Minimal Gold",
+    "name": "7CLOCK Rose Gold Elegance",
     "mood": "cotton",
     "type": "watch",
     "size": "38mm",
-    "price": 1490,
+    "price": 59900,
     "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=800&q=80",
-    "description": "นาฬิกามินิมอลตัวเรือนสีทอง ดีไซน์บางและเรียบหรู เพิ่มความโดดเด่นให้ทุกลุค"
+    "description": "ตัวเรือนชุบทองคำโรสโกลด์ 18K ดีไซน์บางเบาและประณีต เพิ่มความโดดเด่นให้ทุกลุค"
   },
   {
     "id": 5,
-    "name": "7CLOCK Sport Active",
+    "name": "7CLOCK Sport Titanium",
     "mood": "sport",
     "type": "watch",
     "size": "42mm",
-    "price": 1690,
+    "price": 65900,
     "image": "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=800&q=80",
-    "description": "นาฬิกาสปอร์ตดีไซน์แข็งแรง น้ำหนักเบา เหมาะสำหรับการออกกำลังกายและกิจกรรมกลางแจ้ง"
+    "description": "ตัวเรือนไทเทเนียมน้ำหนักเบา กันน้ำ 200 เมตร สปอร์ตหรูสำหรับทุกกิจกรรม"
   },
   {
     "id": 6,
-    "name": "7CLOCK Sport Chrono",
+    "name": "7CLOCK Chronograph Master",
     "mood": "sport",
     "type": "watch",
     "size": "44mm",
-    "price": 1890,
+    "price": 79900,
     "image": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&w=800&q=80",
-    "description": "ดีไซน์สปอร์ตพร้อมหน้าปัดสไตล์ Chronograph ให้ลุคโดดเด่นและพร้อมสำหรับทุกกิจกรรม"
+    "description": "โครโนกราฟระดับมาสเตอร์ หน้าปัดหลายชั้น เครื่องจักรกลความแม่นยำสูง โดดเด่นทุกการเคลื่อนไหว"
   },
   {
     "id": 7,
-    "name": "7CLOCK Luxury Black",
+    "name": "7CLOCK Luxury Noir",
     "mood": "lounge",
     "type": "watch",
     "size": "41mm",
-    "price": 2490,
+    "price": 89900,
     "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=800&q=80",
-    "description": "นาฬิกาพรีเมียมโทนดำ ดีไซน์หรูเรียบ เหมาะสำหรับงานสำคัญและโอกาสพิเศษ"
+    "description": "นาฬิกาโทนดำสุดหรู ตัวเรือนเคลือบ PVD พร้อมกลไก Skeleton มองเห็นเฟืองภายใน เหมาะกับงานพิเศษ"
   },
   {
     "id": 8,
-    "name": "7CLOCK Premium Silver",
+    "name": "7CLOCK Imperial Platinum",
     "mood": "seamless",
     "type": "watch",
     "size": "41mm",
-    "price": 2290,
+    "price": 99000,
     "image": "https://images.unsplash.com/photo-1547996160-012745cc5836?auto=format&fit=crop&w=800&q=80",
-    "description": "ตัวเรือนสีเงินพรีเมียม หน้าปัดเรียบหรู ผสมผสานความคลาสสิกและความทันสมัยอย่างลงตัว"
+    "description": "ตัวเรือนสีแพลทินัมพรีเมียม หน้าปัดกิโยเช่ลวดลายละเอียด ผสมผสานความคลาสสิกและความทันสมัยอย่างลงตัว"
   },
   {
     "id": 9,
@@ -85,18 +85,18 @@
     "mood": "cotton",
     "type": "watch",
     "size": "40mm",
-    "price": 2790,
+    "price": 129000,
     "image": "https://images.unsplash.com/photo-1526045431048-f857369baa09?auto=format&fit=crop&w=800&q=80",
-    "description": "นาฬิกาสไตล์ Executive ตัวเรือนสีทอง ดีไซน์สุภาพและหรู เหมาะสำหรับลุคทางการและสมาร์ทแคชชวล"
+    "description": "นาฬิกาสไตล์ Executive ตัวเรือนทอง 18K ดีไซน์สุภาพและหรูเลิศ เหมาะสำหรับลุคทางการระดับผู้บริหาร"
   },
   {
     "id": 10,
-    "name": "7CLOCK Essential Set",
+    "name": "7CLOCK Grand Collection Set",
     "mood": "lounge",
     "type": "set",
     "size": "40mm / 42mm",
-    "price": 3990,
+    "price": 189000,
     "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80",
-    "description": "เซ็ตนาฬิกาสไตล์ Essential สำหรับคนที่ต้องการความคุ้มค่า พร้อมดีไซน์ที่เลือกใส่ได้ทั้งวันทำงานและวันพักผ่อน"
+    "description": "เซ็ตนาฬิกาคู่ระดับ Grand Collection พร้อมกล่องหนังพรีเมียมและใบรับประกัน เหมาะเป็นของขวัญสุดพิเศษ"
   }
 ]
