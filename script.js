@@ -1,7 +1,7 @@
 // ต้องใส่ <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 // ไว้ในทุกหน้า HTML "ก่อน" script.js
 const SUPABASE_URL = 'https://htxwjotjnucxnrdppoca.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_N0w6k30nuEeY_dSNcsNptg_45ggyL9a'; // anon key ใส่ฝั่งหน้าเว็บได้ (ความปลอดภัยอยู่ที่ RLS)
+const SUPABASE_ANON_KEY = 'sb_publishable_gcQfRrMYqhJf1eFELFLkKw_QLUdRd8l'; // anon key ใส่ฝั่งหน้าเว็บได้ (ความปลอดภัยอยู่ที่ RLS)
 
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
