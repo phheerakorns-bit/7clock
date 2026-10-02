@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checkout | 7clock</title>
+  <title>Checkout | 7CLOCK</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
     <header class="nav-header">
-      <a href="index.html" class="brand-logo">7clock</a>
+      <a href="index.html" class="brand-logo">7CLOCK</a>
       <a href="product.html" class="btn btn-secondary">เลือกสินค้าเพิ่ม</a>
     </header>
 
@@ -37,12 +37,11 @@
         
         <div class="form-group">
           <label for="qty">จำนวน (ชิ้น)</label>
-          <div class="qty-box">
-            <button type="button" id="qtyMinus" aria-label="ลดจำนวน">−</button>
-            <input type="number" id="qty" value="1" min="1" max="99" required>
-            <button type="button" id="qtyPlus" aria-label="เพิ่มจำนวน">+</button>
+          <div class="qty-box" style="display: flex; gap: 0.5rem; align-items: center; margin-top: 0.5rem;">
+            <button type="button" id="qtyMinus" class="btn btn-secondary" style="padding: 0.4rem 1rem;">−</button>
+            <input type="number" id="qty" value="1" min="1" max="99" required style="text-align: center; width: 60px;">
+            <button type="button" id="qtyPlus" class="btn btn-secondary" style="padding: 0.4rem 1rem;">+</button>
           </div>
-          <small id="unitPriceText" style="color:var(--text-muted);"></small>
         </div>
         <div class="form-group">
           <label for="total">ยอดรวมทั้งสิ้น (บาท)</label>
@@ -58,6 +57,6 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="config.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
