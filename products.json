@@ -6,7 +6,7 @@
     "type": "watch",
     "size": "40mm",
     "price": 1290,
-    "image": "1.jpg",
+    "image": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=800&q=80",
     "description": "นาฬิกาดีไซน์คลาสสิก หน้าปัดเรียบหรู ตัวเรือนสีเงิน เหมาะสำหรับใส่ได้ทุกวัน"
   },
   {
@@ -16,7 +16,7 @@
     "type": "watch",
     "size": "40mm",
     "price": 1390,
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop&q=80",
+    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80",
     "description": "นาฬิกาหน้าปัดสีดำสุดคลาสสิก ดีไซน์เรียบง่าย พร้อมสายสีดำสำหรับลุคที่ดูสุขุม"
   },
   {
@@ -26,7 +26,7 @@
     "type": "watch",
     "size": "38mm",
     "price": 1190,
-    "image": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=800&auto=format&fit=crop&q=80",
+    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80",
     "description": "ดีไซน์มินิมอล หน้าปัดสีขาวสะอาดตา เหมาะกับคนที่ชอบความเรียบง่ายและทันสมัย"
   },
   {
@@ -36,7 +36,7 @@
     "type": "watch",
     "size": "38mm",
     "price": 1490,
-    "image": "https://images.unsplash.com/photo-1434056886845-dac89ffe9b56?w=800&auto=format&fit=crop&q=80",
+    "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=800&q=80",
     "description": "นาฬิกามินิมอลตัวเรือนสีทอง ดีไซน์บางและเรียบหรู เพิ่มความโดดเด่นให้ทุกลุค"
   },
   {
@@ -46,7 +46,7 @@
     "type": "watch",
     "size": "42mm",
     "price": 1690,
-    "image": "https://images.unsplash.com/photo-1510017803434-a899398421b3?w=800&auto=format&fit=crop&q=80",
+    "image": "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=800&q=80",
     "description": "นาฬิกาสปอร์ตดีไซน์แข็งแรง น้ำหนักเบา เหมาะสำหรับการออกกำลังกายและกิจกรรมกลางแจ้ง"
   },
   {
@@ -56,7 +56,7 @@
     "type": "watch",
     "size": "44mm",
     "price": 1890,
-    "image": "https://images.unsplash.com/photo-1517502474097-f9b30659dadb?w=800&auto=format&fit=crop&q=80",
+    "image": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&w=800&q=80",
     "description": "ดีไซน์สปอร์ตพร้อมหน้าปัดสไตล์ Chronograph ให้ลุคโดดเด่นและพร้อมสำหรับทุกกิจกรรม"
   },
   {
@@ -66,7 +66,7 @@
     "type": "watch",
     "size": "41mm",
     "price": 2490,
-    "image": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&auto=format&fit=crop&q=80",
+    "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=800&q=80",
     "description": "นาฬิกาพรีเมียมโทนดำ ดีไซน์หรูเรียบ เหมาะสำหรับงานสำคัญและโอกาสพิเศษ"
   },
   {
@@ -76,7 +76,7 @@
     "type": "watch",
     "size": "41mm",
     "price": 2290,
-    "image": "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=800&auto=format&fit=crop&q=80",
+    "image": "https://images.unsplash.com/photo-1547996160-012745cc5836?auto=format&fit=crop&w=800&q=80",
     "description": "ตัวเรือนสีเงินพรีเมียม หน้าปัดเรียบหรู ผสมผสานความคลาสสิกและความทันสมัยอย่างลงตัว"
   },
   {
@@ -86,7 +86,7 @@
     "type": "watch",
     "size": "40mm",
     "price": 2790,
-    "image": "https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?w=800&auto=format&fit=crop&q=80",
+    "image": "https://images.unsplash.com/photo-1526045431048-f857369baa09?auto=format&fit=crop&w=800&q=80",
     "description": "นาฬิกาสไตล์ Executive ตัวเรือนสีทอง ดีไซน์สุภาพและหรู เหมาะสำหรับลุคทางการและสมาร์ทแคชชวล"
   },
   {
@@ -96,7 +96,7 @@
     "type": "set",
     "size": "40mm / 42mm",
     "price": 3990,
-    "image": "https://images.unsplash.com/photo-1526045431048-f857369baa09?w=800&auto=format&fit=crop&q=80",
+    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80",
     "description": "เซ็ตนาฬิกาสไตล์ Essential สำหรับคนที่ต้องการความคุ้มค่า พร้อมดีไซน์ที่เลือกใส่ได้ทั้งวันทำงานและวันพักผ่อน"
   }
 ]
