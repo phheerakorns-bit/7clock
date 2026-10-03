@@ -6,7 +6,7 @@
     "type": "watch",
     "size": "40mm",
     "price": 1290,
-    "image": "https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=800&q=80",
+    "image": "images/watch-1.svg",
     "description": "นาฬิกาสายหนัง ตัวเรือนสแตนเลสสตีล ดีไซน์คลาสสิกเรียบหรู ใส่ได้ทุกวันและเข้ากับทุกลุค"
   },
   {
@@ -16,7 +16,7 @@
     "type": "watch",
     "size": "38mm",
     "price": 1590,
-    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80",
+    "image": "images/watch-2.svg",
     "description": "นาฬิกามินิมอล หน้าปัดสะอาดตา ตัวเรือนสแตนเลสสตีล ดีไซน์เรียบง่ายแต่ดูดี เหมาะกับทั้งงานและชีวิตประจำวัน"
   },
   {
@@ -26,7 +26,7 @@
     "type": "watch",
     "size": "42mm",
     "price": 2490,
-    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80",
+    "image": "images/watch-3.svg",
     "description": "นาฬิกาสปอร์ตโครโนกราฟ หน้าปัดหลายชั้นอ่านง่าย ตัวเรือนแข็งแรง พร้อมสำหรับทุกกิจกรรม"
   },
   {
@@ -36,7 +36,7 @@
     "type": "watch",
     "size": "41mm",
     "price": 3990,
-    "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=800&q=80",
+    "image": "images/watch-4.svg",
     "description": "นาฬิกาสไตล์สเกเลตัน มองเห็นกลไกภายในหน้าปัด ตัวเรือนโทนโรสโกลด์ เพิ่มความโดดเด่นให้ทุกลุค"
   },
   {
@@ -46,7 +46,7 @@
     "type": "watch",
     "size": "36mm",
     "price": 890,
-    "image": "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=800&q=80",
+    "image": "images/watch-5.svg",
     "description": "นาฬิกาดิจิทัลสไตล์เรโทร ตัวเรือนเล็กกะทัดรัด น้ำหนักเบา ดีไซน์เรียบง่ายมีเอกลักษณ์"
   },
   {
@@ -56,7 +56,7 @@
     "type": "watch",
     "size": "44mm",
     "price": 1990,
-    "image": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&w=800&q=80",
+    "image": "images/watch-6.svg",
     "description": "นาฬิกาสำหรับสายออกกำลังกาย ตัวเรือนขนาดใหญ่ อ่านค่าง่าย ใส่สบายตลอดวัน"
   },
   {
@@ -66,7 +66,7 @@
     "type": "watch",
     "size": "32mm",
     "price": 1790,
-    "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=800&q=80",
+    "image": "images/watch-7.svg",
     "description": "นาฬิกาผู้หญิงตัวเรือนโทนโรสโกลด์ ขนาดพอดีข้อมือ ดีไซน์ละมุนหรูหรา เหมาะกับโอกาสพิเศษ"
   },
   {
@@ -76,7 +76,7 @@
     "type": "watch",
     "size": "43mm",
     "price": 2890,
-    "image": "https://images.unsplash.com/photo-1547996160-012745cc5836?auto=format&fit=crop&w=800&q=80",
+    "image": "images/watch-8.svg",
     "description": "นาฬิกาสไตล์ไดฟ์วอทช์ ตัวเรือนแข็งแรง ขอบหมุน หน้าปัดอ่านง่าย ดีไซน์สปอร์ตสำหรับทุกการเดินทาง"
   },
   {
@@ -86,7 +86,7 @@
     "type": "watch",
     "size": "40mm",
     "price": 2190,
-    "image": "https://images.unsplash.com/photo-1526045431048-f857369baa09?auto=format&fit=crop&w=800&q=80",
+    "image": "images/watch-9.svg",
     "description": "นาฬิกาพลังงานแสงอาทิตย์ ไม่ต้องเปลี่ยนถ่านบ่อย ดีไซน์คลาสสิกสุภาพ เหมาะกับการใช้งานทุกวัน"
   },
   {
@@ -96,7 +96,7 @@
     "type": "set",
     "size": "40mm",
     "price": 1190,
-    "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80",
+    "image": "images/watch-10.svg",
     "description": "เซ็ตของขวัญ นาฬิกาพร้อมสายสำรอง เปลี่ยนสไตล์ได้ตามโอกาส จัดมาในกล่องพร้อมมอบ"
   }
 ]
